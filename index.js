@@ -1,14 +1,34 @@
+let characterX = 100; // Posição inicial do personagem
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(63, 193, 237);
 }
 
 function draw() {
+
+if (characterX < 0) {
+    characterX = windowWidth;
+
+} else if (characterX > windowWidth) {
+    characterX = 0;
+}
+
+
   background(63, 193, 237);
   drawGrass();
   drawRoad();
-  drawCharacter(width / 4, height / 2 - 40);
   drawTree((3 * width) / 4, height / 2 - 100);
+  drawCharacter(characterX, height / 2 - 90); 
+  
+
+  // Movimento contínuo ao segurar as teclas
+  if (keyIsDown(LEFT_ARROW)) {
+    characterX -= 5; // Move para a esquerda
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    characterX += 5; // Move para a direita
+  }
 }
 
 function drawGrass() {
@@ -26,47 +46,47 @@ function drawRoad() {
   let lightGray = color(160, 160, 160);
   let steps = 50;
   for (let i = 0; i < steps; i++) {
-      let ratio = i / (steps - 1);
-      let y = lerp(height * 0.6, height, ratio);
-      let nextY = lerp(height * 0.6, height, (i + 1) / (steps - 1));
-      
-      let leftTop = lerp(width / 3, width / 3 + 50, ratio);
-      let rightTop = lerp((2 * width) / 3, (2 * width) / 3 - 50, ratio);
-      let leftBottom = lerp(width / 3, width / 3 + 50, (i + 1) / (steps - 1));
-      let rightBottom = lerp((2 * width) / 3, (2 * width) / 3 - 50, (i + 1) / (steps - 1));
-      
-      fill(lerpColor(lightGray, darkGray, ratio));
-      quad(leftTop, y, rightTop, y, rightBottom, nextY, leftBottom, nextY);
+    let ratio = i / (steps - 1);
+    let y = lerp(height * 0.6, height, ratio);
+    let nextY = lerp(height * 0.6, height, (i + 1) / (steps - 1));
+
+    let leftTop = lerp(width / 3, width / 3 + 50, ratio);
+    let rightTop = lerp((2 * width) / 3, (2 * width) / 3 - 50, ratio);
+    let leftBottom = lerp(width / 3, width / 3 + 50, (i + 1) / (steps - 1));
+    let rightBottom = lerp((2 * width) / 3, (2 * width) / 3 - 50, (i + 1) / (steps - 1));
+
+    fill(lerpColor(lightGray, darkGray, ratio));
+    quad(leftTop, y, rightTop, y, rightBottom, nextY, leftBottom, nextY);
   }
 }
 
-function drawCharacter(x, y) {
+function drawCharacter(characterX, y) {
   // Cabeça ovalada
   fill(255, 182, 193); // Rosa
   noStroke();
-  ellipse(x, y, 50, 60);
+  ellipse(characterX, y, 50, 60);
 
   // Olhos
   fill(0);
-  ellipse(x - 12, y - 5, 6, 8);
-  ellipse(x + 12, y - 5, 6, 8);
+  ellipse(characterX - 12, y - 5, 6, 8);
+  ellipse(characterX + 12, y - 5, 6, 8);
 
   // Boca
   fill(255, 0, 0);
-  arc(x, y + 8, 18, 12, 0, PI);
-  
+  arc(characterX, y + 8, 18, 12, 0, PI);
+
   // Corpo arredondado com roupa vermelha
   fill(255, 0, 0); // Vermelho
-  rect(x - 20, y + 30, 40, 60, 15);
-  
+  rect(characterX - 20, y + 30, 40, 60, 15);
+
   // Braços mais grossos e rosa
   fill(255, 182, 193);
-  rect(x - 35, y + 40, 15, 40, 10);
-  rect(x + 20, y + 40, 15, 40, 10);
-  
+  rect(characterX - 35, y + 40, 15, 40, 10);
+  rect(characterX + 20, y + 40, 15, 40, 10);
+
   // Pernas mais grossas e rosa
-  rect(x - 15, y + 90, 15, 40, 5);
-  rect(x + 5, y + 90, 15, 40, 5);
+  rect(characterX - 15, y + 90, 15, 40, 5);
+  rect(characterX + 5, y + 90, 15, 40, 5);
 }
 
 function drawTree(x, y) {
