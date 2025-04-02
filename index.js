@@ -1,42 +1,24 @@
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background(63, 193, 237);
-  }
+  createCanvas(windowWidth, windowHeight);
+  background(63, 193, 237);
+}
 
 function draw() {
-    // Grama
-    // Green grass at the top part of the ground
-    fill(34, 139, 34); // Green
-    noStroke();
-    // Left grass rectangle
-    rect(0, height * 0.55, width / 3, height * 0.05); 
-    // Right grass rectangle
-    rect(2 * width / 3, height * 0.55, width / 3, height * 0.05);
-    // Brown earth below the grass
-    fill(139, 69, 19); // Brown
-    noStroke();
-    rect(0, height * 0.6, width, height * 0.4); // Earth
+  background(63, 193, 237);
+  
+  // Grama
+  fill(34, 139, 34); // Verde
+  noStroke();
+  rect(0, height / 2, width, height / 2);
 
-    // Estrada
-    // Estrada - Gradient
-    noStroke();
-    let darkGray = color(80, 80, 80);  // Darker gray
-    let lightGray = color(160, 160, 160);  // Lighter gray
-    let steps = 50;  // Number of gradient steps
-    for (let i = 0; i < steps; i++) {
-        let ratio = i / (steps - 1);
-        let y = lerp(height * 0.6, height, ratio);
-        let nextY = lerp(height * 0.6, height, (i + 1) / (steps - 1));
-        
-        let leftTop = lerp(width / 3, width / 3 + 50, ratio);
-        let rightTop = lerp((2 * width) / 3, (2 * width) / 3 - 50, ratio);
-        let leftBottom = lerp(width / 3, width / 3 + 50, (i + 1) / (steps - 1));
-        let rightBottom = lerp((2 * width) / 3, (2 * width) / 3 - 50, (i + 1) / (steps - 1));
-        
-        fill(lerpColor(lightGray, darkGray, ratio));
-        quad(leftTop, y, rightTop, y, rightBottom, nextY, leftBottom, nextY);
-    }
-    beginShape();
+  // Estrada
+  fill(128, 128, 128); // Cinza
+  beginShape();
+  vertex(width / 3, height / 2);
+  vertex((2 * width) / 3, height / 2);
+  vertex((2 * width) / 3 - 50, height);
+  vertex(width / 3 + 50, height);
+  endShape(CLOSE);
 
   // Personagem melhorado
   drawCharacter(width / 4, height / 2 - 40);
