@@ -1,4 +1,6 @@
 let characterX = 100; // Posição inicial do personagem
+let charactery = 260;
+let falling = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -14,12 +16,24 @@ if (characterX < 0) {
     characterX = 0;
 }
 
+if (characterX >= 510 && characterX <= 600) {
+  falling = true;
+}
+
+if (falling) {
+  if (charactery >= windowHeight) { //para de cair quando atinge o chão
+    falling = false;
+  } else {
+    charactery += 5
+  }
+}
+
 
   background(63, 193, 237);
   drawGrass();
   drawRoad();
   drawTree((3 * width) / 4, height / 2 - 100);
-  drawCharacter(characterX, height / 2 - 90); 
+  drawCharacter(characterX, charactery); 
   
 
   // Movimento contínuo ao segurar as teclas
@@ -29,7 +43,7 @@ if (characterX < 0) {
   if (keyIsDown(RIGHT_ARROW)) {
     characterX += 5; // Move para a direita
   }
-}
+
 
 function drawGrass() {
   fill(34, 139, 34);
@@ -44,20 +58,12 @@ function drawRoad() {
   noStroke();
   let darkGray = color(80, 80, 80);
   let lightGray = color(160, 160, 160);
-  let steps = 50;
-  for (let i = 0; i < steps; i++) {
-    let ratio = i / (steps - 1);
-    let y = lerp(height * 0.6, height, ratio);
-    let nextY = lerp(height * 0.6, height, (i + 1) / (steps - 1));
 
-    let leftTop = lerp(width / 3, width / 3 + 50, ratio);
-    let rightTop = lerp((2 * width) / 3, (2 * width) / 3 - 50, ratio);
-    let leftBottom = lerp(width / 3, width / 3 + 50, (i + 1) / (steps - 1));
-    let rightBottom = lerp((2 * width) / 3, (2 * width) / 3 - 50, (i + 1) / (steps - 1));
+  // Parte cinza do buraco (reta)
+  fill(darkGray);
+  rect(width / 3, height * 0.6, width / 3, height * 0.4);
 
-    fill(lerpColor(lightGray, darkGray, ratio));
-    quad(leftTop, y, rightTop, y, rightBottom, nextY, leftBottom, nextY);
-  }
+  
 }
 
 function drawCharacter(characterX, y) {
@@ -100,4 +106,5 @@ function drawTree(x, y) {
   ellipse(x + 30, grassTopY - trunkHeight - 30, 7, 7);
   ellipse(x - 15, grassTopY - trunkHeight, 7, 7);
   ellipse(x + 10, grassTopY - trunkHeight - 50, 7, 7);
+  }
 }
