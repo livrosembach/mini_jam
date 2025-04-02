@@ -1,6 +1,7 @@
 let characterX = 100; // Posição inicial do personagem
 let charactery = 260;
 let falling = false;
+let skyfall = false
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -23,6 +24,20 @@ if (characterX >= 510 && characterX <= 600) {
 if (falling) {
   if (charactery >= windowHeight) { //para de cair quando atinge o chão
     falling = false;
+    skyfall = true;
+    characterX = 100;
+    charactery = -100;
+
+  } else {
+    charactery += 5
+  }
+}
+
+if (skyfall) {
+  
+
+  if (charactery == 260) {
+    skyfall = false;
   } else {
     charactery += 5
   }
