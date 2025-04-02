@@ -41,14 +41,32 @@ function drawRoad() {
 }
 
 function drawCharacter(x, y) {
-  fill(255, 182, 193);
+  // Cabeça ovalada
+  fill(255, 182, 193); // Rosa
   noStroke();
-  ellipse(x, y, 40, 40);
-  rect(x - 10, y + 20, 20, 60);
-  rect(x - 20, y + 40, 15, 40);
-  rect(x + 5, y + 40, 15, 40);
-  rect(x - 15, y + 80, 15, 40);
-  rect(x + 5, y + 80, 15, 40);
+  ellipse(x, y, 50, 60);
+
+  // Olhos
+  fill(0);
+  ellipse(x - 12, y - 5, 6, 8);
+  ellipse(x + 12, y - 5, 6, 8);
+
+  // Boca
+  fill(255, 0, 0);
+  arc(x, y + 8, 18, 12, 0, PI);
+  
+  // Corpo arredondado com roupa vermelha
+  fill(255, 0, 0); // Vermelho
+  rect(x - 20, y + 30, 40, 60, 15);
+  
+  // Braços mais grossos e rosa
+  fill(255, 182, 193);
+  rect(x - 35, y + 40, 15, 40, 10);
+  rect(x + 20, y + 40, 15, 40, 10);
+  
+  // Pernas mais grossas e rosa
+  rect(x - 15, y + 90, 15, 40, 5);
+  rect(x + 5, y + 90, 15, 40, 5);
 }
 
 function drawTree(x, y) {
