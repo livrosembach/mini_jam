@@ -1,65 +1,65 @@
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background(63, 193, 237);
-  }
+  createCanvas(windowWidth, windowHeight);
+  background(63, 193, 237);
+}
 
 function draw() {
-    // Grama
-    // Green grass at the top part of the ground
-    fill(34, 139, 34); // Green
-    noStroke();
-    // Left grass rectangle
-    rect(0, height * 0.55, width / 3, height * 0.05); 
-    // Right grass rectangle
-    rect(2 * width / 3, height * 0.55, width / 3, height * 0.05);
-    // Brown earth below the grass
-    fill(139, 69, 19); // Brown
-    noStroke();
-    rect(0, height * 0.6, width, height * 0.4); // Earth
+  background(63, 193, 237);
+  drawGrass();
+  drawRoad();
+  drawCharacter(width / 4, height / 2 - 40);
+  drawTree((3 * width) / 4, height / 2 - 100);
+}
 
-    // Estrada
-    // Estrada - Gradient
-    noStroke();
-    let darkGray = color(80, 80, 80);  // Darker gray
-    let lightGray = color(160, 160, 160);  // Lighter gray
-    let steps = 50;  // Number of gradient steps
-    for (let i = 0; i < steps; i++) {
-        let ratio = i / (steps - 1);
-        let y = lerp(height * 0.6, height, ratio);
-        let nextY = lerp(height * 0.6, height, (i + 1) / (steps - 1));
-        
-        let leftTop = lerp(width / 3, width / 3 + 50, ratio);
-        let rightTop = lerp((2 * width) / 3, (2 * width) / 3 - 50, ratio);
-        let leftBottom = lerp(width / 3, width / 3 + 50, (i + 1) / (steps - 1));
-        let rightBottom = lerp((2 * width) / 3, (2 * width) / 3 - 50, (i + 1) / (steps - 1));
-        
-        fill(lerpColor(lightGray, darkGray, ratio));
-        quad(leftTop, y, rightTop, y, rightBottom, nextY, leftBottom, nextY);
-    }
-    beginShape();
+function drawGrass() {
+  fill(34, 139, 34);
+  noStroke();
+  rect(0, height * 0.55, width / 3, height * 0.05);
+  rect(2 * width / 3, height * 0.55, width / 3, height * 0.05);
+  fill(139, 69, 19);
+  rect(0, height * 0.6, width, height * 0.4);
+}
 
- 
+function drawRoad() {
+  noStroke();
+  let darkGray = color(80, 80, 80);
+  let lightGray = color(160, 160, 160);
+  let steps = 50;
+  for (let i = 0; i < steps; i++) {
+      let ratio = i / (steps - 1);
+      let y = lerp(height * 0.6, height, ratio);
+      let nextY = lerp(height * 0.6, height, (i + 1) / (steps - 1));
+      
+      let leftTop = lerp(width / 3, width / 3 + 50, ratio);
+      let rightTop = lerp((2 * width) / 3, (2 * width) / 3 - 50, ratio);
+      let leftBottom = lerp(width / 3, width / 3 + 50, (i + 1) / (steps - 1));
+      let rightBottom = lerp((2 * width) / 3, (2 * width) / 3 - 50, (i + 1) / (steps - 1));
+      
+      fill(lerpColor(lightGray, darkGray, ratio));
+      quad(leftTop, y, rightTop, y, rightBottom, nextY, leftBottom, nextY);
+  }
+}
 
-    // Personagem maior
-    fill(255, 182, 193); // Rosa
-    noStroke();
-    ellipse(width / 4, height / 2 - 40, 40, 40); // Cabeça maior
-    rect(width / 4 - 10, height / 2 - 20, 20, 60); // Corpo maior
-    line(width / 4 - 20, height / 2, width / 4 + 20, height / 2); // Braços maiores
-    line(width / 4, height / 2 + 40, width / 4 - 20, height / 2 + 80); // Perna esquerda maior
-    line(width / 4, height / 2 + 40, width / 4 + 20, height / 2 + 80); // Perna direita maior
+function drawCharacter(x, y) {
+  fill(255, 182, 193);
+  noStroke();
+  ellipse(x, y, 40, 40);
+  rect(x - 10, y + 20, 20, 60);
+  rect(x - 20, y + 40, 15, 40);
+  rect(x + 5, y + 40, 15, 40);
+  rect(x - 15, y + 80, 15, 40);
+  rect(x + 5, y + 80, 15, 40);
+}
 
-    // // pedra
-    // fill(0); // Preto
-    // ellipse(width / 4 + 30, height / 2, 20, 20);
-
-    // Árvore
-    fill(139, 69, 19); // Marrom
-    rect((3 * width) / 4, height / 2 - 100, 30, 100); // Tronco maior
-    fill(34, 139, 34); // Verde
-    ellipse((3 * width) / 4 + 15, height / 2 - 120, 100, 100); // Copa maior
-    fill(255, 0, 0); // Vermelho
-    ellipse((3 * width) / 4 + 30, height / 2 - 130, 7, 7); // Fruta maior
-    ellipse((3 * width) / 4 - 15, height / 2 - 100, 7, 7); // Fruta maior
-    ellipse((3 * width) / 4 + 10, height / 2 - 150, 7, 7); // Fruta maior
+function drawTree(x, y) {
+  let grassTopY = height * 0.55;
+  let trunkHeight = 100;
+  fill(139, 69, 19);
+  rect(x, grassTopY - trunkHeight, 30, trunkHeight);
+  fill(34, 139, 34);
+  ellipse(x + 15, grassTopY - trunkHeight - 20, 100, 100);
+  fill(255, 0, 0);
+  ellipse(x + 30, grassTopY - trunkHeight - 30, 7, 7);
+  ellipse(x - 15, grassTopY - trunkHeight, 7, 7);
+  ellipse(x + 10, grassTopY - trunkHeight - 50, 7, 7);
 }
