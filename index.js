@@ -43,7 +43,7 @@ if (jumping) {
       landing = true
   }
   else if (characterY != 200) {
-    characterY -= 4
+    characterY -= 5
   }
 }
 
@@ -52,7 +52,7 @@ if (landing) {
     landing = false;
   }
   else if (characterY != 260) {
-    characterY += 4
+    characterY += 5
   }
 }
 
