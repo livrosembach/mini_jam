@@ -1,7 +1,10 @@
 let characterX = 100; // Posição inicial do personagem
-let charactery = 260;
+let characterY = 260;
 let falling = false;
-let skyfall = false
+let skyfall = false;
+let jumping = false;
+let landing = false;
+let canJump = true;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -22,24 +25,44 @@ if (characterX >= 440 && characterX <= 830) {
 }
 
 if (falling) {
-  if (charactery >= windowHeight) { //para de cair quando atinge o chão
+  if (characterY >= windowHeight) { //para de cair quando atinge o chão
     falling = false;
     skyfall = true;
     characterX = 100;
-    charactery = -100;
+    characterY = -100;
 
   } else {
-    charactery += 5
+    characterY += 5
+  }
+}
+
+if (jumping) {
+  
+  if (characterY == 200){
+      jumping = false
+      landing = true
+  }
+  else if (characterY != 200) {
+    characterY -= 5
+  }
+}
+
+if (landing) {
+  if (characterY == 260) {
+    landing = false;
+  }
+  else if (characterY != 260) {
+    characterY += 5
   }
 }
 
 if (skyfall) {
   
 
-  if (charactery == 260) {
+  if (characterY == 260) {
     skyfall = false;
   } else {
-    charactery += 5
+    characterY += 5
   }
 }
 
@@ -48,7 +71,7 @@ if (skyfall) {
   drawGrass();
   drawRoad();
   drawTree((3 * width) / 4, height / 2 - 100);
-  drawCharacter(characterX, charactery); 
+  drawCharacter(characterX, characterY); 
   
 
   // Movimento contínuo ao segurar as teclas
@@ -57,6 +80,13 @@ if (skyfall) {
   }
   if (keyIsDown(RIGHT_ARROW)) {
     characterX += 5; // Move para a direita
+  }
+  if (keyIsDown(UP_ARROW) && canJump) {
+    jumping = true;
+    canJump = false; // Bloqueia o pulo
+    setTimeout(() => {
+      canJump = true; 
+    }, 600);
   }
 
 
@@ -122,4 +152,5 @@ function drawTree(x, y) {
   ellipse(x - 15, grassTopY - trunkHeight, 7, 7);
   ellipse(x + 10, grassTopY - trunkHeight - 50, 7, 7);
   }
+
 }
