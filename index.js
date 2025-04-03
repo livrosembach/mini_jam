@@ -17,7 +17,7 @@ if (characterX < 0) {
     characterX = 0;
 }
 
-if (characterX >= 510 && characterX <= 600) {
+if (characterX >= 440 && characterX <= 830) {
   falling = true;
 }
 
