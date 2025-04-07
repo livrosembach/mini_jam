@@ -5,6 +5,12 @@ let skyfall = false;
 let jumping = false;
 let landing = false;
 let canJump = true;
+let showLeftImage = false
+
+function preload() {
+  // Carrega a imagem antes do programa iniciar
+  warningImage = loadImage('warning.png'); // Substitua 'warning.png' pelo nome do arquivo da sua imagem
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -22,6 +28,7 @@ if (characterX < 0) {
 
 if (characterX >= 510 && characterX <= 600) {
   falling = true;
+  canJump = false;
 }
 
 if (falling) {
@@ -37,6 +44,10 @@ if (falling) {
 }
 
 if (jumping) {
+
+  if (falling){
+    jumping = false;
+  }
   
   if (characterY == 200){
       jumping = false
@@ -61,6 +72,7 @@ if (skyfall) {
 
   if (characterY == 260) {
     skyfall = false;
+    canJump = true;
   } else {
     characterY += 5
   }
@@ -72,6 +84,7 @@ if (skyfall) {
   drawRoad();
   drawTree((3 * width) / 4, height / 2 - 100);
   drawCharacter(characterX, characterY); 
+  drawNoLeftSign(80, 180);
   
 
   // Movimento contínuo ao segurar as teclas
@@ -153,4 +166,23 @@ function drawTree(x, y) {
   ellipse(x + 10, grassTopY - trunkHeight - 50, 7, 7);
   }
 
+}
+
+function drawNoLeftSign(x, y) {
+  // Desenha o círculo vermelho
+  fill(255, 0, 0); // Vermelho
+  noStroke();
+  ellipse(x, y, 80, 80); // Círculo com 80px de diâmetro
+
+  // Desenha a linha diagonal
+  stroke(255); // Branco
+  strokeWeight(5);
+  line(x - 30, y - 30, x + 30, y + 30); // Linha diagonal
+
+  // Adiciona o texto "←"
+  noStroke();
+  fill(255); // Branco
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text("←", x, y); // Texto no centro do círculo
 }
