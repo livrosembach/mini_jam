@@ -6,10 +6,11 @@ let jumping = false;
 let landing = false;
 let canJump = true;
 let showLeftImage = false
+let showFallImage = false;
 
 function preload() {
-  // Carrega a imagem antes do programa iniciar
-  warningImage = loadImage('warning.png'); // Substitua 'warning.png' pelo nome do arquivo da sua imagem
+  warningImage = loadImage('scaredemoji.jpg',)
+  fallimage = loadImage('gato.jpg')
 }
 
 function setup() {
@@ -19,14 +20,17 @@ function setup() {
 
 function draw() {
 
+image(warningImage, 200, 200);
+
 if (characterX < 0) {
     characterX = windowWidth;
+    showLeftImage = true;
 
 } else if (characterX > windowWidth) {
     characterX = 0;
 }
 
-if (characterX >= 510 && characterX <= 600) {
+if (characterX >= 510 && characterX <= 1000) {
   falling = true;
   canJump = false;
 }
@@ -35,6 +39,7 @@ if (falling) {
   if (characterY >= windowHeight) { //para de cair quando atinge o chão
     falling = false;
     skyfall = true;
+    showFallImage = true;
     characterX = 100;
     characterY = -100;
 
@@ -42,6 +47,7 @@ if (falling) {
     characterY += 5
   }
 }
+
 
 if (jumping) {
 
@@ -85,6 +91,23 @@ if (skyfall) {
   drawTree((3 * width) / 4, height / 2 - 100);
   drawCharacter(characterX, characterY); 
   drawNoLeftSign(80, 180);
+  drawGoDownSign(750, 120); // Desenha o círculo azul com a seta para baixo
+
+
+  if (showLeftImage) {
+    image(warningImage, 1000, 20, 250, 250); // Desenha a imagem no centro da tela
+    setTimeout(() => {
+      showLeftImage = false; // Remove a imagem após 2,5 segundos
+    }, 2500);
+  }
+
+  if (showFallImage) {
+    image(fallimage, 420, 20, 250, 250); // Desenha a imagem no centro da tela
+    setTimeout(() => {
+      showFallImage = false; // Remove a imagem após 2,5 segundos
+    }, 2500);
+  }
+
   
 
   // Movimento contínuo ao segurar as teclas
@@ -185,4 +208,17 @@ function drawNoLeftSign(x, y) {
   textSize(32);
   textAlign(CENTER, CENTER);
   text("←", x, y); // Texto no centro do círculo
+}
+
+function drawGoDownSign(x, y) {
+  // Desenha o círculo azul
+  fill(0, 0, 255); // Azul
+  noStroke();
+  ellipse(x, y, 80, 80); // Círculo com 80px de diâmetro
+
+  // Adiciona a seta para baixo
+  fill(255); // Branco
+  noStroke();
+  triangle(x - 15, y - 10, x + 15, y - 10, x, y + 20); // Triângulo para a seta
+  rect(x - 5, y - 20, 10, 10); // Retângulo para o "cabo" da seta
 }
