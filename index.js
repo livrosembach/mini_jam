@@ -7,6 +7,7 @@ let landing = false;
 let canJump = true;
 let showLeftImage = false
 let showFallImage = false;
+let timesFallen = 0;
 
 function preload() {
   warningImage = loadImage('scaredemoji.jpg',)
@@ -42,6 +43,7 @@ if (falling) {
     showFallImage = true;
     characterX = 100;
     characterY = -100;
+    timesFallen++;
 
   } else {
     characterY += 5
@@ -189,6 +191,12 @@ function drawTree(x, y) {
   ellipse(x + 10, grassTopY - trunkHeight - 50, 7, 7);
   }
 
+  //o contador no canto superior esquerdo
+  // pq q esse codigo ta comentado em portuges seus analfabeto
+  fill(255);
+  textSize(24);
+  textAlign(LEFT, TOP);
+  text("Falls: " + timesFallen, 20, 20);
 }
 
 function drawNoLeftSign(x, y) {
